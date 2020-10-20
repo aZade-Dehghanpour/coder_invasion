@@ -1,0 +1,4 @@
+# Do not track visual studio code config
+.vscode/
+# Do not tack virtual environment
+venv_alien_invasion/
