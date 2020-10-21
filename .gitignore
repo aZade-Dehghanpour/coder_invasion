@@ -2,3 +2,6 @@
 .vscode/
 # Do not tack virtual environment
 venv_alien_invasion/
+
+#Do not track images
+images/
