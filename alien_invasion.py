@@ -38,7 +38,6 @@ class AlienInvasion:
                 elif event.type == pygame.KEYUP:
                     self._check_keyup_events(event)
 
-
     def _update_screen(self):
         self.screen.fill(self.bg_color)
         self.ship.blitme()
@@ -46,11 +45,11 @@ class AlienInvasion:
         pygame.display.flip()
 
     def _check_keydown_events(self, event):
-        if event.key == pygame.K_RIGHT:
-            self.ship.move_right = True
-        elif event.key == pygame.K_LEFT:
+        if event.key == pygame.K_RIGHT and self.ship.move_left == False:
+            self.ship.move_right = True   
+        elif event.key == pygame.K_LEFT and self.ship.move_right == False:
             self.ship.move_left = True
-
+            
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
             self.ship.move_right = False
