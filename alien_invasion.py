@@ -11,7 +11,9 @@ class AlienInvasion:
         pygame.init()
         self.settings = Settings()
         # Initialize a window or screen for display
-        self.screen = pygame.display.set_mode((self.settings.width,self.settings.height))
+        self.screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+        self.settings.width =self.screen.get_rect().width
+        self.settings.height = self.screen.get_rect().height
         # Set background color
         self.bg_color = self.settings.bg_color
         # Set the current window caption
