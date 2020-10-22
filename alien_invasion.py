@@ -49,12 +49,20 @@ class AlienInvasion:
             self.ship.move_right = True   
         elif event.key == pygame.K_LEFT and self.ship.move_right == False:
             self.ship.move_left = True
-            
+        elif event.key == pygame.K_UP and self.ship.move_down == False:
+            self.ship.move_up = True
+        elif event.key == pygame.K_DOWN and self.ship.move_up == False:
+            self.ship.move_down = True
+
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
             self.ship.move_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.move_left = False
+        elif event.key == pygame.K_UP:
+            self.ship.move_up = False
+        elif event.key == pygame.K_DOWN:
+            self.ship.move_down = False
 
 if __name__ == '__main__':
     #Make a game instance, and run the game
