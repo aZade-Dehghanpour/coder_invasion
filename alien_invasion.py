@@ -30,7 +30,9 @@ class AlienInvasion:
             #Update location of ship
             self.ship.update()
             #Update location of bullet
-            self.bullets.update()
+            self._update_bullets()
+            #Delete Bullets
+            
             #Re-draw the screen during each pass through the loop
             self._update_screen()
                        
@@ -43,6 +45,13 @@ class AlienInvasion:
                     self._check_keydown_events(event)    
                 elif event.type == pygame.KEYUP:
                     self._check_keyup_events(event)
+
+    def _update_bullets(self):
+        self.bullets.update()
+        for bullet in self.bullets.copy():
+                if bullet.rect.bottom<0:
+                    self.bullets.remove(bullet)
+                print(len(self.bullets))
 
     def _update_screen(self):
         self.screen.fill(self.bg_color)
@@ -81,8 +90,9 @@ class AlienInvasion:
 
     def _fire_bullet(self):
         #create a bullet and add it to the bullet group
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet) 
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet) 
 
 if __name__ == '__main__':
     #Make a game instance, and run the game
