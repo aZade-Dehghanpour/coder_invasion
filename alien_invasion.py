@@ -34,6 +34,8 @@ class AlienInvasion:
             self.ship.update()
             #Update location of bullet
             self._update_bullets()
+            #update location of aliens (move aliens)
+            self._update_aliens()
             #Re-draw the screen during each pass through the loop
             self._update_screen()
                        
@@ -53,6 +55,7 @@ class AlienInvasion:
                 if bullet.rect.bottom<0:
                     self.bullets.remove(bullet)
                 print(len(self.bullets))
+        collisions = pygame.sprite.groupcollide(self.bullets,self.aliens,True,True)
 
     def _update_screen(self):
         self.screen.fill(self.bg_color)
@@ -100,18 +103,27 @@ class AlienInvasion:
         #create a number of aliens and add them to the fleet
         alien = Aliens(self)
         #available horizontal space
-        alien_width = alien.rect.width
-        available_horizontal_space = self.screen.get_rect().width - 2*alien_width
-        number_of_aliens = available_horizontal_space//(2*alien_width)
-        for alien_number in range(number_of_aliens):
-            self._create_alien(alien_number)
+        alien_width, alien_height = alien.rect.size
+        available_space_x = self.screen.get_rect().width - 2*alien_width
+        availebe_space_y = self.screen.get_rect().height - self.ship.rect.height -3*alien_height
+        number_of_rows = availebe_space_y//(2*alien_height)
+        number_of_aliens = available_space_x//(2*alien_width)
+
+        for row_number in range(number_of_rows):
+            for alien_number in range(number_of_aliens):
+                self._create_alien(alien_number,row_number)
             
-    def _create_alien(self,alien_number):
+    def _create_alien(self,alien_number,row_number):
         alien = Aliens(self)
-        alien_width = alien.rect.width
+        alien_width, alien_height = alien.rect.size
         alien.x = alien_width + 2*alien_width*alien_number
+        alien.y = alien_height + 2*alien_height*row_number
         alien.rect.x = alien.x
+        alien.rect.y = alien.y
         self.aliens.add(alien)   
+
+    def _update_aliens(self):
+        self.aliens.update()
 
 if __name__ == '__main__':
     #Make a game instance, and run the game
