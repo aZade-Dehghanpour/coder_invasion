@@ -55,7 +55,13 @@ class AlienInvasion:
                 if bullet.rect.bottom<0:
                     self.bullets.remove(bullet)
                 print(len(self.bullets))
+        self._check_bullet_alien_collision()
+
+    def _check_bullet_alien_collision(self):
         collisions = pygame.sprite.groupcollide(self.bullets,self.aliens,True,True)
+        if not self.aliens:
+            self.bullets.empty()
+            self._create_feelt()
 
     def _update_screen(self):
         self.screen.fill(self.bg_color)
@@ -76,10 +82,10 @@ class AlienInvasion:
             self.ship.move_right = True   
         elif event.key == pygame.K_LEFT and self.ship.move_right == False:
             self.ship.move_left = True
-        elif event.key == pygame.K_UP and self.ship.move_down == False:
-            self.ship.move_up = True
-        elif event.key == pygame.K_DOWN and self.ship.move_up == False:
-            self.ship.move_down = True
+        #elif event.key == pygame.K_UP and self.ship.move_down == False:
+            #self.ship.move_up = True
+        #elif event.key == pygame.K_DOWN and self.ship.move_up == False:
+            #self.ship.move_down = True
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
 
@@ -124,6 +130,8 @@ class AlienInvasion:
 
     def _update_aliens(self):
         self.aliens.update()
+        if pygame.sprite.groupcollide(self.ship,self.aliens):
+            print("Ship hit!!!")
 
 if __name__ == '__main__':
     #Make a game instance, and run the game
