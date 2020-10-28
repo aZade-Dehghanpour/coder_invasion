@@ -23,6 +23,12 @@ class Ship:
         self.move_left = False
         self.move_up = False
         self.move_down = False
+    
+    def center_ship(self):
+        
+        #start each new ship at the bottom center of the screen
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)
 
     def update(self):
         """ Update location of ship based on movement flag"""
