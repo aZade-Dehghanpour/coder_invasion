@@ -130,7 +130,7 @@ class AlienInvasion:
 
     def _update_aliens(self):
         self.aliens.update()
-        if pygame.sprite.groupcollide(self.ship,self.aliens):
+        if pygame.sprite.spritecollideany(self.ship,self.aliens):
             print("Ship hit!!!")
 
 if __name__ == '__main__':
