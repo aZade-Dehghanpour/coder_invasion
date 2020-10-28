@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from aliens import Aliens
 class AlienInvasion:
     """ Overall Class to manage game assets and behaviours"""
 
@@ -21,6 +22,8 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
+        self._create_feelt()
 
     def run_game(self):
         """ Start the main loop for the game"""
@@ -31,8 +34,6 @@ class AlienInvasion:
             self.ship.update()
             #Update location of bullet
             self._update_bullets()
-            #Delete Bullets
-            
             #Re-draw the screen during each pass through the loop
             self._update_screen()
                        
@@ -59,7 +60,8 @@ class AlienInvasion:
         
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
-
+        
+        self.aliens.draw(self.screen)
         #Make the most recently drawn screen visible.
         pygame.display.flip()
 
@@ -93,6 +95,23 @@ class AlienInvasion:
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet) 
+
+    def _create_feelt(self):
+        #create a number of aliens and add them to the fleet
+        alien = Aliens(self)
+        #available horizontal space
+        alien_width = alien.rect.width
+        available_horizontal_space = self.screen.get_rect().width - 2*alien_width
+        number_of_aliens = available_horizontal_space//(2*alien_width)
+        for alien_number in range(number_of_aliens):
+            self._create_alien(alien_number)
+            
+    def _create_alien(self,alien_number):
+        alien = Aliens(self)
+        alien_width = alien.rect.width
+        alien.x = alien_width + 2*alien_width*alien_number
+        alien.rect.x = alien.x
+        self.aliens.add(alien)   
 
 if __name__ == '__main__':
     #Make a game instance, and run the game
